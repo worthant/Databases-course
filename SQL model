@@ -1,0 +1,27 @@
+CREATE TABLE ship (
+  id SERIAL PRIMARY KEY,
+  disconnected_from_earth BOOLEAN,
+  safety BOOLEAN,
+  antenna TEXT,
+  troubles TEXT,
+  place POINT
+);
+
+CREATE TABLE place (
+  id SERIAL PRIMARY KEY,
+  coordinates POINT
+);
+
+CREATE TABLE human (
+  id SERIAL PRIMARY KEY,
+  name TEXT,
+  troubles TEXT,
+  place POINT
+);
+ 
+CREATE TABLE troubles (
+  id SERIAL PRIMARY KEY,
+  difficulty INTEGER,
+  consequences INTEGER
+  priority INTEGER
+);
