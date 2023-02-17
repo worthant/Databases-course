@@ -1,6 +1,4 @@
 # Databases-course
-
-# Databases-course
 ## Laboratory works
 - [Laboratory work №1](./lab1)
 - [Laboratory work №2](./lab2)
