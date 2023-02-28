@@ -1,27 +1,58 @@
-CREATE TABLE ship (
-  id SERIAL PRIMARY KEY,
-  disconnected_from_earth BOOLEAN,
-  safety BOOLEAN,
-  antenna TEXT,
-  troubles TEXT,
-  place POINT
+CREATE TABLE antenna (
+    id SERIAL PRIMARY KEY,
+    durability INTEGER,
+    works BOOLEAN
+);
+
+CREATE TABLE troubles (
+    id SERIAL PRIMARY KEY,
+    difficulty INTEGER,
+    consequences INTEGER,
+    priority INTEGER
 );
 
 CREATE TABLE place (
-  id SERIAL PRIMARY KEY,
-  coordinates POINT
+    id SERIAL PRIMARY KEY,
+    coordinates POINT,
+    galaxy TEXT,
+    name TEXT
+);
+
+CREATE TABLE shipType (
+    shipType TEXT PRIMARY KEY
+);
+
+CREATE TABLE ship (
+    id SERIAL PRIMARY KEY,
+    disconnected_from_earth BOOLEAN,
+    safety BOOLEAN,
+    shipModules INTEGER REFERENCES antenna,
+    troubles INTEGER REFERENCES troubles,
+    place INTEGER REFERENCES place,
+    shipType TEXT REFERENCES shipType
+);
+
+CREATE TABLE nationality (
+    nationality varchar(30) PRIMARY KEY
+);
+
+CREATE TABLE HumanOrigin (
+    id SERIAL PRIMARY KEY,
+    country TEXT,
+    nationality TEXT,
+    typeOfGovernment TEXT,
+    City TEXT
 );
 
 CREATE TABLE human (
-  id SERIAL PRIMARY KEY,
-  name TEXT,
-  troubles TEXT,
-  place POINT
+    id SERIAL PRIMARY KEY,
+    name TEXT,
+    surname TEXT,
+    age INTEGER,
+    nationality TEXT REFERENCES nationality,
+    troubles INTEGER REFERENCES troubles,
+    place INTEGER REFERENCES place
 );
- 
-CREATE TABLE troubles (
-  id SERIAL PRIMARY KEY,
-  difficulty INTEGER,
-  consequences INTEGER
-  priority INTEGER
-);
+
+
+
