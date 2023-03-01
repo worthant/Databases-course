@@ -1,7 +1,11 @@
 CREATE TABLE antenna (
-    id SERIAL PRIMARY KEY,
-    durability INTEGER,
-    works BOOLEAN
+	id SERIAL PRIMARY KEY,
+	manufacturer TEXT,
+	model TEXT,
+	type TEXT,
+	frequency_range TEXT,
+	gain DECIMAL,
+	power_capacity DECIMAL
 );
 
 CREATE TABLE troubles (
@@ -19,7 +23,11 @@ CREATE TABLE place (
 );
 
 CREATE TABLE shipType (
-    shipType TEXT PRIMARY KEY
+    id SERIAL PRIMARY KEY,
+    shipType TEXT NOT NULL,
+    capacity INTEGER,
+    maxSpeed INTEGER,
+    range INTEGER
 );
 
 CREATE TABLE ship (
@@ -28,7 +36,7 @@ CREATE TABLE ship (
     safety BOOLEAN,
     shipModules INTEGER REFERENCES antenna,
     place INTEGER REFERENCES place,
-    shipType TEXT REFERENCES shipType
+    shipType INTEGER REFERENCES shipType
 );
 
 CREATE TABLE nationality (
