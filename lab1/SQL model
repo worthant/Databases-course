@@ -39,7 +39,6 @@ CREATE TABLE nationality (
 CREATE TABLE HumanOrigin (
     id SERIAL PRIMARY KEY,
     country TEXT,
-    nationality TEXT,
     typeOfGovernment TEXT,
     City TEXT
 );
