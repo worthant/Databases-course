@@ -27,7 +27,6 @@ CREATE TABLE ship (
     disconnected_from_earth BOOLEAN,
     safety BOOLEAN,
     shipModules INTEGER REFERENCES antenna,
-    troubles INTEGER REFERENCES troubles,
     place INTEGER REFERENCES place,
     shipType TEXT REFERENCES shipType
 );
@@ -49,9 +48,20 @@ CREATE TABLE human (
     surname TEXT,
     age INTEGER,
     nationality TEXT REFERENCES nationality,
-    troubles INTEGER REFERENCES troubles,
+    origin INTEGER REFERENCES HumanOrigin,
     place INTEGER REFERENCES place
 );
 
+CREATE TABLE human_troubles (
+    human_id INTEGER REFERENCES human(id),
+    troubles_id INTEGER REFERENCES troubles(id),
+    PRIMARY KEY (human_id, troubles_id)
+);
+
+CREATE TABLE ship_troubles (
+    ship_id INTEGER REFERENCES ship(id),
+    troubles_id INTEGER REFERENCES troubles(id),
+    PRIMARY KEY (ship_id, troubles_id)
+);
 
 
