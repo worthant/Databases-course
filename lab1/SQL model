@@ -1,75 +1,77 @@
+CREATE TYPE nationality_enum AS ENUM ('American', 'British', 'Canadian', 'Chinese', 'French', 'German', 'Indian', 'Japanese', 'Russian', 'Spanish');
+
+CREATE TYPE priority_enum AS ENUM ('high', 'medium', 'low');
+
+CREATE TYPE difficulty_enum AS ENUM ('easy', 'moderate', 'hard');
+
+CREATE TYPE consequences_enum AS ENUM ('minimal', 'moderate', 'severe', 'catastrophic');
+
 CREATE TABLE antenna (
-	id SERIAL PRIMARY KEY,
-	manufacturer TEXT,
-	model TEXT,
-	type TEXT,
-	frequency_range TEXT,
-	gain DECIMAL,
-	power_capacity DECIMAL
+    id SERIAL PRIMARY KEY,
+    manufacturer TEXT NULL,
+    model TEXT NOT NULL,
+    type TEXT NOT NULL,
+    frequency_range TEXT NOT NULL,
+    gain DECIMAL NOT NULL,
+    power_capacity DECIMAL NOT NULL
 );
 
 CREATE TABLE troubles (
     id SERIAL PRIMARY KEY,
-    difficulty INTEGER,
-    consequences INTEGER,
-    priority INTEGER
+    difficulty difficulty_enum NOT NULL,
+    consequences consequences_enum NOT NULL,
+    priority priority_enum NOT NULL
 );
 
 CREATE TABLE place (
     id SERIAL PRIMARY KEY,
-    coordinates POINT,
-    galaxy TEXT,
-    name TEXT
+    coordinates POINT NOT NULL,
+    galaxy TEXT NOT NULL,
+    name TEXT NOT NULL
 );
 
-CREATE TABLE shipType (
+CREATE TABLE ship_type (
     id SERIAL PRIMARY KEY,
-    shipType TEXT NOT NULL,
-    capacity INTEGER,
-    maxSpeed INTEGER,
-    range INTEGER
+    ship_type TEXT NOT NULL,
+    capacity INTEGER NOT NULL,
+    max_speed INTEGER NOT NULL,
+    range INTEGER NOT NULL
 );
 
 CREATE TABLE ship (
     id SERIAL PRIMARY KEY,
-    disconnected_from_earth BOOLEAN,
-    safety BOOLEAN,
-    shipModules INTEGER REFERENCES antenna,
-    place INTEGER REFERENCES place,
-    shipType INTEGER REFERENCES shipType
+    disconnected_from_earth BOOLEAN NOT NULL,
+    safety BOOLEAN NOT NULL,
+    ship_modules INTEGER REFERENCES antenna(id) NOT NULL,
+    place INTEGER REFERENCES place(id) NOT NULL,
+    ship_type INTEGER REFERENCES ship_type(id) NOT NULL
 );
 
-CREATE TABLE nationality (
-    nationality varchar(30) PRIMARY KEY
-);
-
-CREATE TABLE HumanOrigin (
+CREATE TABLE human_origin (
     id SERIAL PRIMARY KEY,
-    country TEXT,
-    typeOfGovernment TEXT,
-    City TEXT
+    country TEXT NOT NULL,
+    type_of_government TEXT NOT NULL,
+    city TEXT NOT NULL
 );
 
 CREATE TABLE human (
     id SERIAL PRIMARY KEY,
-    name TEXT,
-    surname TEXT,
-    age INTEGER,
-    nationality TEXT REFERENCES nationality,
-    origin INTEGER REFERENCES HumanOrigin,
-    place INTEGER REFERENCES place
+    name TEXT NOT NULL,
+    surname TEXT NOT NULL,
+    age INTEGER NOT NULL,
+    nationality nationality_enum NOT NULL,
+    origin INTEGER REFERENCES human_origin(id) NOT NULL,
+    place INTEGER REFERENCES place(id) NOT NULL
 );
 
 CREATE TABLE human_troubles (
-    human_id INTEGER REFERENCES human(id),
-    troubles_id INTEGER REFERENCES troubles(id),
+    human_id INTEGER REFERENCES human(id) NOT NULL,
+    troubles_id INTEGER REFERENCES troubles(id) NOT NULL,
     PRIMARY KEY (human_id, troubles_id)
 );
 
 CREATE TABLE ship_troubles (
-    ship_id INTEGER REFERENCES ship(id),
-    troubles_id INTEGER REFERENCES troubles(id),
+    ship_id INTEGER REFERENCES ship(id) NOT NULL,
+    troubles_id INTEGER REFERENCES troubles(id) NOT NULL,
     PRIMARY KEY (ship_id, troubles_id)
 );
-
-
