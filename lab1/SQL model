@@ -31,7 +31,7 @@ CREATE TYPE nationality_enum AS ENUM ('American', 'British', 'Canadian', 'Chines
 CREATE TYPE priority_enum AS ENUM ('high', 'medium', 'low');
 CREATE TYPE difficulty_enum AS ENUM ('easy', 'moderate', 'hard');
 CREATE TYPE consequences_enum AS ENUM ('minimal', 'moderate', 'severe', 'catastrophic');
-CREATE TYPE type_of_government_enum AS ENUM ('democracy', 'monarchy', 'dictatorship', 'communism', 'socialism');
+CREATE TYPE type_of_government_enum AS ENUM ('democracy', 'monarchy', 'dictatorship', 'communism', 'socialism', 'republic', 'constitutional monarchy', 'parliamentary republic', 'parliamentary democracy', 'federal semi-presidential republic', 'federal presidential republic', 'federal parliamentary constitutional republic', 'absolute monarchy');
 
 -- create domain's
 CREATE DOMAIN positive_integer AS INTEGER
