@@ -1,12 +1,30 @@
+-- dropping enum types if they're exists
+DROP TYPE IF EXISTS nationality_enum CASCADE;
+DROP TYPE IF EXISTS priority_enum CASCADE;
+DROP TYPE IF EXISTS difficulty_enum CASCADE;
+DROP TYPE IF EXISTS consequences_enum CASCADE;
+
+-- dropping tables if they're exists
+DROP TABLE IF EXISTS human_troubles CASCADE;
+DROP TABLE IF EXISTS ship_troubles CASCADE;
+DROP TABLE IF EXISTS human CASCADE;
+DROP TABLE IF EXISTS human_origin CASCADE;
+DROP TABLE IF EXISTS ship CASCADE;
+DROP TABLE IF EXISTS ship_type CASCADE;
+DROP TABLE IF EXISTS place CASCADE;
+DROP TABLE IF EXISTS troubles CASCADE;
+DROP TABLE IF EXISTS antenna CASCADE;
+
+
+-- creating enums if they're exists
 CREATE TYPE nationality_enum AS ENUM ('American', 'British', 'Canadian', 'Chinese', 'French', 'German', 'Indian', 'Japanese', 'Russian', 'Spanish');
-
 CREATE TYPE priority_enum AS ENUM ('high', 'medium', 'low');
-
 CREATE TYPE difficulty_enum AS ENUM ('easy', 'moderate', 'hard');
-
 CREATE TYPE consequences_enum AS ENUM ('minimal', 'moderate', 'severe', 'catastrophic');
 
-CREATE TABLE antenna (
+
+-- creating tables if they're exists
+CREATE TABLE IF NOT EXISTS antenna (
     id SERIAL PRIMARY KEY,
     manufacturer TEXT NULL,
     model TEXT NOT NULL,
@@ -16,21 +34,21 @@ CREATE TABLE antenna (
     power_capacity DECIMAL NOT NULL
 );
 
-CREATE TABLE troubles (
+CREATE TABLE IF NOT EXISTS troubles (
     id SERIAL PRIMARY KEY,
     difficulty difficulty_enum NOT NULL,
     consequences consequences_enum NOT NULL,
     priority priority_enum NOT NULL
 );
 
-CREATE TABLE place (
+CREATE TABLE IF NOT EXISTS place (
     id SERIAL PRIMARY KEY,
     coordinates POINT NOT NULL,
     galaxy TEXT NOT NULL,
     name TEXT NOT NULL
 );
 
-CREATE TABLE ship_type (
+CREATE TABLE IF NOT EXISTS ship_type (
     id SERIAL PRIMARY KEY,
     ship_type TEXT NOT NULL,
     capacity INTEGER NOT NULL,
@@ -38,7 +56,7 @@ CREATE TABLE ship_type (
     range INTEGER NOT NULL
 );
 
-CREATE TABLE ship (
+CREATE TABLE IF NOT EXISTS ship (
     id SERIAL PRIMARY KEY,
     disconnected_from_earth BOOLEAN NOT NULL,
     safety BOOLEAN NOT NULL,
@@ -47,14 +65,14 @@ CREATE TABLE ship (
     ship_type INTEGER REFERENCES ship_type(id) NOT NULL
 );
 
-CREATE TABLE human_origin (
+CREATE TABLE IF NOT EXISTS human_origin (
     id SERIAL PRIMARY KEY,
     country TEXT NOT NULL,
     type_of_government TEXT NOT NULL,
     city TEXT NOT NULL
 );
 
-CREATE TABLE human (
+CREATE TABLE IF NOT EXISTS human (
     id SERIAL PRIMARY KEY,
     name TEXT NOT NULL,
     surname TEXT NOT NULL,
@@ -64,13 +82,13 @@ CREATE TABLE human (
     place INTEGER REFERENCES place(id) NOT NULL
 );
 
-CREATE TABLE human_troubles (
+CREATE TABLE IF NOT EXISTS human_troubles (
     human_id INTEGER REFERENCES human(id) NOT NULL,
     troubles_id INTEGER REFERENCES troubles(id) NOT NULL,
     PRIMARY KEY (human_id, troubles_id)
 );
 
-CREATE TABLE ship_troubles (
+CREATE TABLE IF NOT EXISTS ship_troubles (
     ship_id INTEGER REFERENCES ship(id) NOT NULL,
     troubles_id INTEGER REFERENCES troubles(id) NOT NULL,
     PRIMARY KEY (ship_id, troubles_id)
