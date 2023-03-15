@@ -1,10 +1,11 @@
--- dropping enum types if they're exists
+-- dropping enum types
 DROP TYPE IF EXISTS nationality_enum CASCADE;
 DROP TYPE IF EXISTS priority_enum CASCADE;
 DROP TYPE IF EXISTS difficulty_enum CASCADE;
 DROP TYPE IF EXISTS consequences_enum CASCADE;
+DROP TYPE IF EXISTS type_of_government_enum CASCADE;
 
--- dropping tables if they're exists
+-- dropping tables 
 DROP TABLE IF EXISTS human_troubles CASCADE;
 DROP TABLE IF EXISTS ship_troubles CASCADE;
 DROP TABLE IF EXISTS human CASCADE;
@@ -15,13 +16,36 @@ DROP TABLE IF EXISTS place CASCADE;
 DROP TABLE IF EXISTS troubles CASCADE;
 DROP TABLE IF EXISTS antenna CASCADE;
 
+-- dropping domains
+DROP DOMAIN IF EXISTS positive_integer CASCADE;
+DROP DOMAIN IF EXISTS positive_decimal CASCADE;
+DROP DOMAIN IF EXISTS max_speed_constraint CASCADE;
+DROP DOMAIN IF EXISTS range_constraint CASCADE;
+DROP DOMAIN IF EXISTS power_capacity_constraint CASCADE;
+DROP DOMAIN IF EXISTS gain_constraint CASCADE;
+DROP DOMAIN IF EXISTS ship_capacity_constraint CASCADE;
+DROP DOMAIN IF EXISTS age_constraint CASCADE;
 
 -- creating enums if they're exists
 CREATE TYPE nationality_enum AS ENUM ('American', 'British', 'Canadian', 'Chinese', 'French', 'German', 'Indian', 'Japanese', 'Russian', 'Spanish');
 CREATE TYPE priority_enum AS ENUM ('high', 'medium', 'low');
 CREATE TYPE difficulty_enum AS ENUM ('easy', 'moderate', 'hard');
 CREATE TYPE consequences_enum AS ENUM ('minimal', 'moderate', 'severe', 'catastrophic');
+CREATE TYPE type_of_government_enum AS ENUM ('democracy', 'monarchy', 'dictatorship', 'communism', 'socialism');
 
+-- create domain's
+CREATE DOMAIN positive_integer AS INTEGER
+CHECK (VALUE > 0);
+
+CREATE DOMAIN positive_decimal AS DECIMAL
+CHECK (VALUE > 0);
+
+CREATE DOMAIN max_speed_constraint AS positive_integer;
+CREATE DOMAIN range_constraint AS positive_integer;
+CREATE DOMAIN power_capacity_constraint AS positive_decimal;
+CREATE DOMAIN gain_constraint AS positive_decimal;
+CREATE DOMAIN ship_capacity_constraint AS positive_integer;
+CREATE DOMAIN age_constraint AS positive_integer;
 
 -- creating tables if they're exists
 CREATE TABLE IF NOT EXISTS antenna (
@@ -30,8 +54,8 @@ CREATE TABLE IF NOT EXISTS antenna (
     model TEXT NOT NULL,
     type TEXT NOT NULL,
     frequency_range TEXT NOT NULL,
-    gain DECIMAL NOT NULL,
-    power_capacity DECIMAL NOT NULL
+    gain gain_constraint NOT NULL,
+    power_capacity power_capacity_constraint NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS troubles (
@@ -51,9 +75,9 @@ CREATE TABLE IF NOT EXISTS place (
 CREATE TABLE IF NOT EXISTS ship_type (
     id SERIAL PRIMARY KEY,
     ship_type TEXT NOT NULL,
-    capacity INTEGER NOT NULL,
-    max_speed INTEGER NOT NULL,
-    range INTEGER NOT NULL
+    ship_capacity ship_capacity_constraint NOT NULL,
+    max_speed max_speed_constraint NOT NULL,
+    range range_constraint NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS ship (
@@ -68,7 +92,7 @@ CREATE TABLE IF NOT EXISTS ship (
 CREATE TABLE IF NOT EXISTS human_origin (
     id SERIAL PRIMARY KEY,
     country TEXT NOT NULL,
-    type_of_government TEXT NOT NULL,
+    type_of_government type_of_government_enum NOT NULL,
     city TEXT NOT NULL
 );
 
@@ -76,7 +100,7 @@ CREATE TABLE IF NOT EXISTS human (
     id SERIAL PRIMARY KEY,
     name TEXT NOT NULL,
     surname TEXT NOT NULL,
-    age INTEGER NOT NULL,
+    age age_constraint NOT NULL,
     nationality nationality_enum NOT NULL,
     origin INTEGER REFERENCES human_origin(id) NOT NULL,
     place INTEGER REFERENCES place(id) NOT NULL
