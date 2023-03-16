@@ -1,0 +1,62 @@
+-- This will output the execution plan for the query.
+EXPLAIN SELECT * FROM human WHERE nationality = 'American';
+
+-- This will remove all data from the "human" table.
+TRUNCATE TABLE human;
+
+-- This will insert a new row into the "human" table with the given values, or update the row with the same id if it already exists.
+INSERT INTO human (id, name, surname, age, nationality, origin, place) 
+VALUES (1, 'John', 'Doe', 25, 'American', 1, 1) 
+ON CONFLICT (id) DO UPDATE SET 
+name = excluded.name, 
+surname = excluded.surname, 
+age = excluded.age, 
+nationality = excluded.nationality, 
+origin = excluded.origin, 
+place = excluded.place;
+
+-- This will update the age of the human with name 'John' and surname 'Doe' to 30.
+UPDATE human SET age = 30 WHERE name = 'John' AND surname = 'Doe';
+
+
+-- CASCADE:
+-- CASCADE can be used with the following commands: DELETE and UPDATE
+
+-- This will delete the row with id=1 from the place table and all rows referencing it in other tables will be deleted as well.
+DELETE FROM place WHERE id = 1 CASCADE;
+
+-- This will update the city value in the human_origin table and all rows referencing the updated value in other tables will be updated with the new value as well.
+UPDATE human_origin SET city = 'New York' WHERE city = 'Los Angeles' CASCADE;
+
+
+-- CONSTRAINT
+CREATE TABLE employees (
+    id SERIAL PRIMARY KEY,
+    first_name TEXT NOT NULL,
+    last_name TEXT NOT NULL,
+    department_id INTEGER NOT NULL REFERENCES departments(id),
+    ...
+    CONSTRAINT fk_department_name
+        FOREIGN KEY (department_id, last_name)
+        REFERENCES departments(id, name)
+);
+
+
+-- SELECT
+-- ascending, descengind, nulls first, nulls last;
+
+SELECT * FROM my_table ORDER BY my_column ASC NULLS FIRST;
+SELECT * FROM my_table ORDER BY my_column DESC;
+
+-- order by
+SELECT name, age, nationality
+FROM human
+ORDER BY age DESC;
+
+
+-- group by & join
+SELECT h.nationality, COUNT(ht.troubles_id) AS total_troubles
+FROM human h
+JOIN human_troubles ht ON h.id = ht.human_id
+GROUP BY h.nationality;
+
