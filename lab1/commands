@@ -4,6 +4,16 @@ EXPLAIN SELECT * FROM human WHERE nationality = 'American';
 -- This will remove all data from the "human" table.
 TRUNCATE TABLE human;
 
+-- For each ship, display it's quantity of antennas onboard and total power capacity for them
+SELECT ship_type.ship_type, COUNT(antenna.id) AS antenna_count, SUM(antenna.power_capacity) AS total_power_capacity
+FROM antenna
+JOIN ship ON ship.ship_modules = antenna.id
+JOIN ship_type ON ship.ship_type = ship_type.id
+GROUP BY ship_type.ship_type;
+
+-- print total power capacity for each antenna module
+SELECT id, SUM(power_capacity) as total_capacity FROM antenna GROUP BY id;
+
 -- This will insert a new row into the "human" table with the given values, or update the row with the same id if it already exists.
 INSERT INTO human (id, name, surname, age, nationality, origin, place) 
 VALUES (1, 'John', 'Doe', 25, 'American', 1, 1) 
