@@ -55,7 +55,7 @@ CREATE TABLE employees (
 -- SELECT
 -- ascending, descengind, nulls first, nulls last;
 
-SELECT * FROM my_table ORDER BY my_column ASC NULLS FIRST;
+SELECT * FROM human ORDER BY id ASC NULLS FIRST;
 SELECT * FROM my_table ORDER BY my_column DESC;
 
 -- order by
