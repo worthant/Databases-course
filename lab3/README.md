@@ -1,7 +1,7 @@
 ## Вариант `3131015`
-|.pdf|.docx|
-|-|-|
-| [report](./docs/report.pdf) | [report](./docs/report.docx) |
+|.pdf|.docx| scripts | additional_tasks |
+|---|---|---|---|
+| [report](./docs/report.pdf) | [report](./docs/report.docx) | [scripts](./scripts.sql) | [additional_tasks](./additional_tasks.sql)|
   
 Для выполнения лабораторной работы №2 необходимо:
 
