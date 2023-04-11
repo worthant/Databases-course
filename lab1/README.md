@@ -1,7 +1,7 @@
 ## Вариант `310915`
-|.pdf|.docx|
-|-|-|
-| [report](./docs/report.pdf) | [report](./docs/report.docx) |
+|.pdf|.docx|Datalogical diagram|SQL model|inserted_data|commands_for_training|
+|-|-|-|-|-|-|
+| [report](./docs/report.pdf) | [report](./docs/report.docx) | [diagram](./diagrams/Datalogical_diagram.jpg) | [model](./SQL%20model.sql) | [data](./inserted_data.sql) | [commands](./commands.sql) |
   
 Для выполнения лабораторной работы №1 необходимо:
 ```
