@@ -1,7 +1,8 @@
 ## Вариант `313121`
-|.pdf|.docx|
-|-|-|
-| [report](./docs/report.pdf) | [report](./docs/report.docx) |
+|.pdf|.docx | additional_task |
+|---|---|---|
+| [report](./docs/report.pdf) | [report](./docs/report.docx) | [additional_task](./additional_task.sql)|
+  
   
 Для выполнения лабораторной работы №3 необходимо:
 

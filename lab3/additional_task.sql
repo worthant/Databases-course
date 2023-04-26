@@ -7,15 +7,6 @@ DROP TRIGGER IF EXISTS ship_type_after_insert ON ship_type;
 DROP TRIGGER IF EXISTS ship_type_before_delete ON ship_type;
 DROP TRIGGER IF EXISTS ship_type_delete_cascade_trigger ON ship_type;
 
--- Доп: написать триггер, который будет выводить информацию об объекте, 
--- который был добавлен/удалён в табличку ship_type.
--- 
-
--- Удаляем существующие триггеры, если они существуют
-DROP TRIGGER IF EXISTS ship_type_after_insert ON ship_type;
-DROP TRIGGER IF EXISTS ship_type_before_delete ON ship_type;
-DROP TRIGGER IF EXISTS ship_type_delete_cascade_trigger ON ship_type;
-
 -- Создаем функцию, которая вызывается при вставке записи в таблицу ship_type
 CREATE OR REPLACE FUNCTION ship_type_insert_trigger() RETURNS TRIGGER AS $$
 BEGIN
